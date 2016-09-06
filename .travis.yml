@@ -3,10 +3,7 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]] sudo apt-get -qq update; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]] sudo apt-get install -y debhelper dpkg-dev libssl-dev libevent-dev sqlite3 libsqlite3-dev postgresql-client libpq-dev mysql-client libmysqlclient-dev libhiredis-dev; fi
 
-os:
-  - linux
-  - osx
-    osx_image:
-    - xcode8
-    - xcode7
-    - beta-xcode6.1
+  
+os: 
+ - linux 
+ - osx
