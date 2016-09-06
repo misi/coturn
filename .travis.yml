@@ -1,9 +1,15 @@
-language: cpp
 language: c
 
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; brew outdated openssl || brew upgrade openssl; brew install libevent mysql sqlite hiredis; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -qq update; sudo apt-get install -y debhelper dpkg-dev libssl-dev libevent-dev sqlite3 libsqlite3-dev postgresql-client libpq-dev mysql-client libmysqlclient-dev libhiredis-dev; fi
+
+env:
+  - TOOLCHAIN=libcxx CONFIG=Debug
+  - TOOLCHAIN=libcxx CONFIG=Release
+os: 
+  - linux
+  - osx
 
 matrix:
     include:
@@ -12,7 +18,7 @@ matrix:
         - os: linux
           dist: trusty
           sudo: required
-       -  os: osx
+        - os: osx
           osx_image: xcode7
         - os: osx
           osx_image: xcode6
