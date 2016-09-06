@@ -7,7 +7,7 @@ matrix:
   include:
     - os: linux
       sudo: required
-     - os: linux
+    - os: linux
       dist: trusty
       sudo: required
     - os: osx
