@@ -2255,10 +2255,14 @@ int encode_oauth_token_normal(const u08bits *server_name, encoded_oauth_token *e
 		ns_bcopy(dtoken->enc_block.mac_key,orig_field+len,dtoken->enc_block.key_length);
 		len += dtoken->enc_block.key_length;
 
-		*((uint64_t*)(orig_field+len)) = nswap64(dtoken->enc_block.timestamp);
+		uint64_t ntimestamp;
+		ntimestamp = nswap64(dtoken->enc_block.timestamp);
+		ns_bcopy(&ntimestamp,orig_field+len,8);
 		len += 8;
 
-		*((uint32_t*)(orig_field+len)) = nswap32(dtoken->enc_block.lifetime);
+		uint32_t nlifetime;
+		nlifetime = nswap32(dtoken->enc_block.lifetime);
+		ns_bcopy(&nlifetime,orig_field+len,4);
 		len += 4;
 
 		const EVP_CIPHER * cipher = get_cipher_type(key->as_rs_alg);
@@ -2382,10 +2386,14 @@ int decode_oauth_token_normal(const u08bits *server_name, const encoded_oauth_to
 		ns_bcopy(decoded_field+len,dtoken->enc_block.mac_key,dtoken->enc_block.key_length);
 		len += dtoken->enc_block.key_length;
 
-		dtoken->enc_block.timestamp = nswap64(*((uint64_t*)(decoded_field+len)));
+		uint64_t ntimestamp;
+		ns_bcopy(ecoded_field+len,&ntimestamp,8);
+		dtoken->enc_block.timestamp = nswap64(ntimestamp);
 		len += 8;
 
-		dtoken->enc_block.lifetime = nswap32(*((uint32_t*)(decoded_field+len)));
+		uint32_t nlifetime;
+		ns_bcopy(ecoded_field+len,&nlifetime,4);
+		dtoken->enc_block.lifetime = nswap32(nlifetime);
 		len += 4;
 
 		return 0;
@@ -2431,11 +2439,14 @@ static int encode_oauth_token_gcm(const u08bits *server_name, encoded_oauth_toke
 
 		ns_bcopy(dtoken->enc_block.mac_key,orig_field+len,dtoken->enc_block.key_length);
 		len += dtoken->enc_block.key_length;
-
-		*((uint64_t*)(orig_field+len)) = nswap64(dtoken->enc_block.timestamp);
+		uint64_t ntimestamp;
+		ntimestamp = nswap64(dtoken->enc_block.timestamp);
+		ns_bcopy(&ntimestamp,orig_field+len,8);
 		len += 8;
 
-		*((uint32_t*)(orig_field+len)) = nswap32(dtoken->enc_block.lifetime);
+		uint32_t nlifetime;
+		nlifetime = nswap32(dtoken->enc_block.lifetime);
+		ns_bcopy(&nlifetime,orig_field+len,4);
 		len += 4;
 
 		const EVP_CIPHER * cipher = get_cipher_type(key->as_rs_alg);
@@ -2608,10 +2619,14 @@ static int decode_oauth_token_gcm(const u08bits *server_name, const encoded_oaut
 		ns_bcopy(decoded_field+len,dtoken->enc_block.mac_key,dtoken->enc_block.key_length);
 		len += dtoken->enc_block.key_length;
 
-		dtoken->enc_block.timestamp = nswap64(*((uint64_t*)(decoded_field+len)));
+		uint64_t ntimestamp;
+		ns_bcopy(decoded_field+len,&ntimestamp,8);
+		dtoken->enc_block.timestamp = nswap64(ntimestamp);
 		len += 8;
 
-		dtoken->enc_block.lifetime = nswap32(*((uint32_t*)(decoded_field+len)));
+		uint32_t nlifetime;
+		ns_bcopy(decoded_field+len,&nlifetime,4);
+		dtoken->enc_block.lifetime = nswap32(nlifetime);
 		len += 4;
 
 		return 0;
