@@ -3,6 +3,7 @@ language: cpp
 
 before_install:
   - export CPPFLAGS="$CPPFLAGS -I/usr/local/opt/openssl/include"
+  - export LDFLAGS="$LDFLAGS -L/usr/local/opt/openssl/lib"
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; brew outdated openssl || brew upgrade openssl; brew install mysql sqlite hiredis; fi
 
 matrix:
