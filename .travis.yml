@@ -11,13 +11,13 @@ addons:
     - libsqlite3-dev
     - postgresql-client
     - libpq-dev
-    - mysql-client
+    - mysql-client-5.6
     - libmysqlclient-dev
     - libhiredis-dev
 
 before_install:
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; brew outdated openssl ||
-  brew upgrade openssl; brew install libevent mysql sqlite hiredis; fi
+  brew upgrade openssl; brew install mysql sqlite hiredis; fi
 
 matrix:
   include:
