@@ -11,7 +11,6 @@ addons:
     - libsqlite3-dev
     - postgresql-client
     - libpq-dev
-    - mysql-client-5.6
     - libmysqlclient-dev
     - libhiredis-dev
 
@@ -23,9 +22,17 @@ matrix:
   include:
   - os: linux
     sudo: required
+    addons:
+      apt:
+        packages:
+        - mysql-client
   - os: linux
     dist: trusty
     sudo: required
+    addons:
+      apt:
+        packages:
+        - mysql-client-5.6
   - os: osx
     osx_image: xcode7
   - os: osx
